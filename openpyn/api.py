@@ -14,7 +14,9 @@ def get_nordvpn_json():
     AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36'}
 
     try:
-        json_response = requests.get(url, headers=headers).json()
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        json_response = response.json()
 
     except requests.exceptions.HTTPError:
         print("Cannot GET the json from nordvpn.com, Manually Specify a Server\
