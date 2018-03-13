@@ -13,18 +13,34 @@ def update_service(openpyn_options, run=False):
     if "--silent" not in openpyn_options:
         openpyn_options += " --silent "
     if "-f" in openpyn_options or "--force-fw-rules" in openpyn_options:
-        kill_option = " --kill-flush"
+        kill_option = "--kill-flush"
     else:
-        kill_option = " --kill"
+        kill_option = "--kill"
     openpyn_options = openpyn_options.replace("-d ", "")
     openpyn_options = openpyn_options.replace("--daemon", "")
     openpyn_location = str(subprocess.check_output(["which", "openpyn"]))[2:-3]
     sleep_location = str(subprocess.check_output(["which", "sleep"]))[2:-3]
 
-    service_text = "[Unit]\nDescription=NordVPN connection manager\nWants=network-online.target\nAfter=network-online.target\nAfter=multi-user.target\n[Service]\nType=simple\nUser=root\nWorkingDirectory="\
-        + __basefilepath__ + "\nExecStartPre=" + sleep_location + " 10\nExecStart=" + \
-        openpyn_location + " " + openpyn_options + "\nExecStop=" + openpyn_location + kill_option + \
-        "\nStandardOutput=syslog\nStandardError=syslog\n[Install]\nWantedBy=multi-user.target\n"
+    service_text = '\n'.join([
+        '[Unit]',
+        'Description=NordVPN Connection Manager',
+        'Wants=network-online.target',
+        'After=network-online.target',
+        'After=multi-user.target',
+        '[Service]',
+        'Type=simple',
+        'User=root',
+        'WorkingDirectory={basefilepath}',
+        'ExecStartPre={sleep} 10',
+        'ExecStart={openpyn} {openpynopts}',
+        'ExecStop={openpyn} {killopts}',
+        'StandardOutput=syslog',
+        'StandardError=syslog',
+        '[Install]',
+        'WantedBy=multi-user.target',
+    ]).format(openpyn=openpyn_location, openpynopts=openpyn_options, 
+              killopts=kill_option, sleep=sleep_location, 
+              basefilepath=__basefilepath__)
 
     with open("/etc/systemd/system/openpyn.service", "w+") as service_file:
         service_file.write(service_text)
