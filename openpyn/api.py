@@ -29,8 +29,7 @@ def get_nordvpn_json():
 
 
 # Gets json data, from api.nordvpn.com. filter servers by type, country, area.
-def get_data_from_api(
-        country_code, area, p2p, dedicated, double_vpn, tor_over_vpn, anti_ddos, netflix):
+def get_data_from_api(country_code, area, p2p, dedicated, double_vpn, tor_over_vpn, anti_ddos, netflix):
 
     json_response = get_nordvpn_json()
 
@@ -49,6 +48,7 @@ def get_data_from_api(
 def list_all_countries():
     countries_mapping = {}
     json_response = get_nordvpn_json()
+
     for res in json_response:
         if res["domain"][:2] not in countries_mapping:
             countries_mapping.update({res["domain"][:2]: res["country"]})
