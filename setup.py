@@ -36,7 +36,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     entry_points='''
     [console_scripts]
-    nordvpn=openpyn.openpyn:connectvpn
+    nordvpn=openpyn.openpyn:nordvpn
     ''',
     data_files=__data_files__,
     include_package_data=True,

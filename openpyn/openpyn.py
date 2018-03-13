@@ -23,12 +23,7 @@ import click
 
 def main():
     parser = argparse.ArgumentParser(
-        description="A python3 script/systemd service (GPLv3+) to easily connect to and switch between, OpenVPN \
-        servers hosted by NordVPN. Quickly Connect to the least busy servers (using current \
-        data from Nordvpn website) with lowest latency from you. Find Nordvpn servers in a given \
-        country or city. Tunnels DNS traffic through the VPN which normally (when using OpenVPN \
-        with NordVPN) goes through your ISP's DNS (still unencrypted, even if you use a thirdparty \
-        DNS servers) and completely compromises Privacy!")
+        description="")
     parser.add_argument(
         '-v', '--version', action='version', version="openpyn " + __version__)
     parser.add_argument(
@@ -775,13 +770,36 @@ def connect(server, port, silent, test, skip_dns_patch, openvpn_options, server_
             sys.exit()
 
 
-@click.command()
-@click.option('--country', type=str, help='Tunnel traffic to this country')
-def connectvpn(country):
-    click.echo('testing123')
-    click.echo(country)
+@click.group()
+def nordvpn():
+    '''A python3 script/systemd service (GPLv3+) to easily connect to and switch between, OpenVPN
+    servers hosted by NordVPN. Quickly Connect to the least busy servers (using current
+    data from Nordvpn website) with lowest latency from you. Find Nordvpn servers in a given
+    country or city. Tunnels DNS traffic through the VPN which normally (when using OpenVPN
+    with NordVPN) goes through your ISP's DNS (still unencrypted, even if you use a thirdparty
+    DNS servers) and completely compromises Privacy!'''
+    pass
+        
+    
+@nordvpn.command()
+def initialize():
+    '''Initialize the application for use. Includes creating the credentials store,
+    updating the VPN config files. Requires sudo access'''
+    click.echo('Initializing')
+    raise NotImplementedError
+
+
+@nordvpn.command()
+def connectvpn():
+    '''Connect '''
+    click.echo('connect')
+    raise NotImplementedError
     
 
-if __name__ == '__main__':
-    main()
-    sys.exit()
+@nordvpn.command()
+def status():
+    '''Return NordVPN connection status information, including the status of the
+    systemd unit.'''
+    click.echo('status')
+    raise NotImplementedError
+
