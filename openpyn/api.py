@@ -19,20 +19,18 @@ def get_nordvpn_json():
         json_response = response.json()
 
     except requests.exceptions.HTTPError:
-        print("Cannot GET the json from nordvpn.com, Manually Specify a Server\
-        using '-s' for example '-s au10'")
-        sys.exit()
+        sys.exit("Cannot GET the json from nordvpn.com, Manually Specify a Server"
+                 "using '-s' for example '-s au10'")
+
     except requests.exceptions.RequestException:
-        print("There was an ambiguous exception, Check Your Network Connection.",
-              "forgot to flush iptables? (openpyn -x)")
-        sys.exit()
+        sys.exit("There was an ambiguous exception, Check Your Network Connection."
+                 "forgot to flush iptables? (openpyn -x)")
 
     return json_response
 
 
 # Gets json data, from api.nordvpn.com. filter servers by type, country, area.
 def get_data_from_api(country_code, area, p2p, dedicated, double_vpn, tor_over_vpn, anti_ddos, netflix):
-
     json_response = get_nordvpn_json()
 
     type_filtered_servers = filters.filter_by_type(
