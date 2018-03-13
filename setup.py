@@ -34,10 +34,10 @@ setuptools.setup(
     ],
     platforms=['GNU/Linux', 'Ubuntu', 'Debian', 'Kali', 'CentOS', 'Arch', 'Fedora'],
     packages=setuptools.find_packages(),
-    entry_points={
-        'console_scripts': [
-            'openpyn = openpyn.openpyn:main',
-            'openpyn-management = openpyn.management.management:show']},
+    entry_points='''
+    [console_scripts]
+    nordvpn=openpyn.openpyn:connectvpn
+    ''',
     data_files=__data_files__,
     include_package_data=True,
     exclude_package_data={'openpyn': ['creds', 'credentials', 'install.sh', '.gitignore']},

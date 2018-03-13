@@ -18,6 +18,7 @@ import argparse
 import os
 import sys
 import time
+import click
 
 
 def main():
@@ -773,6 +774,13 @@ def connect(server, port, silent, test, skip_dns_patch, openvpn_options, server_
         except PermissionError:     # needed cause complains when killing sudo process
             sys.exit()
 
+
+@click.command()
+@click.option('--country', type=str, help='Tunnel traffic to this country')
+def connectvpn(country):
+    click.echo('testing123')
+    click.echo(country)
+    
 
 if __name__ == '__main__':
     main()
