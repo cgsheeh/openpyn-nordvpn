@@ -1,7 +1,6 @@
 from openpyn import filters
 from colorama import Fore, Back, Style
 import requests
-import json
 import sys
 
 from tabulate import tabulate

@@ -1,8 +1,6 @@
 from openpyn import __basefilepath__
 from openpyn import api
 import subprocess
-import os
-import json
 from openpyn.converter import Converter, T_CLIENT
 
 

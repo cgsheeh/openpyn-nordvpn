@@ -15,12 +15,8 @@ from openpyn import __basefilepath__
 from colorama import Fore, Back, Style
 import subprocess
 import argparse
-import requests
-import random
 import os
-import json
 import sys
-import platform
 import time
 
 
