@@ -8,12 +8,14 @@ from tabulate import tabulate
 
 
 # Using requests, GETs and returns json from a url.
-def get_json(url):
+def get_nordvpn_json():
+    url = 'https://api.nordvpn.com/server'
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) \
     AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36'}
 
     try:
         json_response = requests.get(url, headers=headers).json()
+
     except requests.exceptions.HTTPError:
         print("Cannot GET the json from nordvpn.com, Manually Specify a Server\
         using '-s' for example '-s au10'")
@@ -22,6 +24,7 @@ def get_json(url):
         print("There was an ambiguous exception, Check Your Network Connection.",
               "forgot to flush iptables? (openpyn -x)")
         sys.exit()
+
     return json_response
 
 
@@ -29,8 +32,7 @@ def get_json(url):
 def get_data_from_api(
         country_code, area, p2p, dedicated, double_vpn, tor_over_vpn, anti_ddos, netflix):
 
-    url = "https://api.nordvpn.com/server"
-    json_response = get_json(url)
+    json_response = get_nordvpn_json()
 
     type_filtered_servers = filters.filter_by_type(
         json_response, p2p, dedicated, double_vpn, tor_over_vpn, anti_ddos, netflix)
@@ -46,24 +48,22 @@ def get_data_from_api(
 
 def list_all_countries():
     countries_mapping = {}
-    url = "https://api.nordvpn.com/server"
-    json_response = get_json(url)
+    json_response = get_nordvpn_json()
     for res in json_response:
         if res["domain"][:2] not in countries_mapping:
             countries_mapping.update({res["domain"][:2]: res["country"]})
-            
+
     print(tabulate(list(countries_mapping.items())))
-     
     sys.exit()
 
 
 def get_country_code(full_name):
-    url = "https://api.nordvpn.com/server"
-    json_response = get_json(url)
+    json_response = get_nordvpn_json()
     for res in json_response:
         if res["country"].lower() == full_name.lower():
             code = res["domain"][:2].lower()
             return code
+
     print(Fore.RED + "Country Name Not Correct")
     print(Style.RESET_ALL)
     sys.exit()
