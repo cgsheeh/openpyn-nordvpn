@@ -17,9 +17,10 @@ def check_credentials():
 def save_credentials():
     credentials_file_path = __basefilepath__ + "credentials"
     if root.verify_running_as_root() is False:
-        print("Please run as 'sudo openpyn --init' the first time. Root access is",
-              "needed to store credentials in " + "'" + credentials_file_path + "'" + ".")
-        sys.exit()
+        sys.exit('\n'.join([
+            "Please run as 'sudo openpyn --init' the first time. Root access is",
+            "needed to store credentials in '{}'".format(credentials_file_path)]))
+        
     else:
         print("Storing credentials in " + "'" + credentials_file_path + "'" + " with openvpn",
               "compatible 'auth-user-pass' file format\n")
