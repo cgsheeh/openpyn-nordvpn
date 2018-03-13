@@ -53,7 +53,7 @@ def list_all_countries():
         if res["domain"][:2] not in countries_mapping:
             countries_mapping.update({res["domain"][:2]: res["country"]})
 
-    print(tabulate(list(countries_mapping.items())))
+    print(tabulate(sorted(list(countries_mapping.items()))))
     sys.exit()
 
 
