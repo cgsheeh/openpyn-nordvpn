@@ -9,11 +9,6 @@ def verify_root_access(message):
     # in a case when starting openpyn without sudo then providing sudo priveleges when asked,
     # sudo priveleges get cached, os.getuid would say user not root and print "root needed"
     # messages, but it would work
-
-    #    if os.getuid() != 0:
-    #        print(message, '\n')
-    #        return False
-
     try:
         check_root = subprocess.check_output(
             ["sudo", "-n", "cat", "/etc/resolv.conf"], stderr=subprocess.DEVNULL)
@@ -27,7 +22,6 @@ def verify_root_access(message):
 # check if openpyn itself has been started with root access.
 def verify_running_as_root():
     if os.getuid() == 0:
-        # print(message, '\n')
         return True
     return False
 
