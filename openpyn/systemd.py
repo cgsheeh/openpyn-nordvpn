@@ -44,7 +44,6 @@ def update_service(openpyn_options, run=False):
 
     with open("/etc/systemd/system/openpyn.service", "w+") as service_file:
         service_file.write(service_text)
-        service_file.close()
 
     print("\nThe Following config has been saved in openpyn.service.",
           "You can Run it or/and Enable it with: 'sudo systemctl start openpyn',",
