@@ -4,6 +4,8 @@ import requests
 import json
 import sys
 
+from tabulate import tabulate
+
 
 # Using requests, GETs and returns json from a url.
 def get_json(url):
@@ -49,8 +51,9 @@ def list_all_countries():
     for res in json_response:
         if res["domain"][:2] not in countries_mapping:
             countries_mapping.update({res["domain"][:2]: res["country"]})
-    for key in countries_mapping.keys():
-        print("Full Name : " + countries_mapping[key] + "      Country Code : " + key + '\n')
+            
+    print(tabulate(list(countries_mapping.items())))
+     
     sys.exit()
 
 
