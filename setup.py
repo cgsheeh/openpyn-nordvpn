@@ -30,6 +30,7 @@ setuptools.setup(
         'requests==2.18.4',
         'colorama==0.3.9',
         'tabulate==0.8.2',
+        'click==6.7',
     ],
     platforms=['GNU/Linux', 'Ubuntu', 'Debian', 'Kali', 'CentOS', 'Arch', 'Fedora'],
     packages=setuptools.find_packages(),
