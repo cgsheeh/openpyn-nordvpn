@@ -1,46 +1,29 @@
 from openpyn import __basefilepath__
 from openpyn import root
-import subprocess
-import sys
+import yaml
+from pathlib import Path
+
+# This module should store and retrieve the app config
+# We should store in the config a key, which can be used
+# to unlock the uname/password
+DEFAULT_CONFIG = Path('/home/connor/.config/nordvpn.yml')
 
 
-def check_credentials():
-    credentials_file_path = __basefilepath__ + "credentials"
+def get_config(path=DEFAULT_CONFIG) -> dict:
+    '''Returns a dict containing config variables for this host'''
     try:
-        serverFiles = subprocess.check_output(
-            "ls " + credentials_file_path, shell=True, stderr=subprocess.DEVNULL)
-    except subprocess.CalledProcessError:
-        return False
-    return True
+        with path.open('r') as config_file:
+            config = yaml.load(config_file)
+
+    except FileNotFoundError:
+        return {}
+
+    return config
 
 
-def save_credentials():
-    credentials_file_path = __basefilepath__ + "credentials"
-    if root.verify_running_as_root() is False:
-        sys.exit('\n'.join([
-            "Please run as 'sudo openpyn --init' the first time. Root access is",
-            "needed to store credentials in '{}'".format(credentials_file_path)]))
-        
-    else:
-        print("Storing credentials in " + "'" + credentials_file_path + "'" + " with openvpn",
-              "compatible 'auth-user-pass' file format\n")
+def write_config(config, path=DEFAULT_CONFIG):
+    if not path.exists():
+        path.touch()
 
-        username = input("Enter your username for NordVPN, i.e youremail@yourmail.com: ")
-        password = input("Enter the password for NordVPN: ")
-        try:
-            with open(credentials_file_path, 'w') as creds:
-                creds.write(username + "\n")
-                creds.write(password + "\n")
-            creds.close()
-            subprocess.call(["sudo", "mkdir", "-p", __basefilepath__])
-            # Change file permission to 600
-            subprocess.check_call(["sudo", "chmod", "600", credentials_file_path])
-
-            print("Awesome, the credentials have been saved in " +
-                  "'" + credentials_file_path + "'" + "\n")
-        except subprocess.CalledProcessError:
-            print("Your OS is not letting modify " + "'" + credentials_file_path + "'",
-                  "Please run with 'sudo' to store credentials")
-            subprocess.call(["sudo", "rm", credentials_file_path])
-            sys.exit()
-    return
+    with path.open('w') as config_file:
+        config_file.write(yaml.dump(config))

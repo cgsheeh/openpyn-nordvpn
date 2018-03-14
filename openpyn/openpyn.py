@@ -753,7 +753,7 @@ def connect(server, port, silent, test, skip_dns_patch, openvpn_options, server_
             else:
                 subprocess.run(
                     ["sudo", "openvpn", "--redirect-gateway", "--auth-retry",
-                     "nointeract", "--config", vpn_config_file, "--auth-user-pass",
+                     "nointeract", "--confcredentials.ig", vpn_config_file, "--auth-user-pass",
                      __basefilepath__ + "credentials",
                      "--management", "127.0.0.1", "7015", "--management-up-down"]
                     + openvpn_options.split(), check=True)
@@ -779,14 +779,30 @@ def nordvpn():
     with NordVPN) goes through your ISP's DNS (still unencrypted, even if you use a thirdparty
     DNS servers) and completely compromises Privacy!'''
     pass
-        
-    
+
+
 @nordvpn.command()
 def initialize():
     '''Initialize the application for use. Includes creating the credentials store,
     updating the VPN config files. Requires sudo access'''
     click.echo('Initializing')
-    raise NotImplementedError
+
+    config = credentials.get_config()
+
+
+    name = click.prompt('Enter your username', type=str, default=config.get('username'))
+    passwd = click.prompt('Enter your password', type=str, default=config.get('password'))
+
+    if click.confirm('Write config?'):
+        credentials.write_config({
+            'username': name,
+            'password': passwd,
+        })
+
+        return
+
+    click.secho('Config not written.')
+
 
 
 @nordvpn.command()
@@ -794,7 +810,7 @@ def connectvpn():
     '''Connect '''
     click.echo('connect')
     raise NotImplementedError
-    
+
 
 @nordvpn.command()
 def status():
