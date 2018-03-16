@@ -26,6 +26,16 @@ def server_usage(domain=None) -> dict:
     resp.raise_for_status()
 
     return resp.json()
+
+
+def ovpn_files() -> bytes:
+    url = ENDPOINT + '/files/zipv2'
+    resp = requests.get(url)
+    resp.raise_for_status()
+
+    return resp.content
+
+
 def ip_addr_nord() -> IPv4Address:
     '''Get the IP address NordVPN believes you have'''
     url = ENDPOINT + '/user/address'
