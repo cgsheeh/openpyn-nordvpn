@@ -771,11 +771,11 @@ def connect(server, port, silent, test, skip_dns_patch, openvpn_options, server_
 @click.group()
 def nordvpn():
     '''nordvpn is a utility to easily connect to and switch between OpenVPN
-    servers hosted by NordVPN. Quickly Connect to the least busy servers (using current
-    data from Nordvpn website) with lowest latency from you. Find Nordvpn servers in a given
+    servers hosted by NordVPN. Quickly connect to the least busy servers (using current
+    data from NordVPN's website) with the lowest latency. Find NordVPN servers in a given
     country or city. Tunnels DNS traffic through the VPN which normally (when using OpenVPN
-    with NordVPN) goes through your ISP's DNS (still unencrypted, even if you use a thirdparty
-    DNS servers) and completely compromises Privacy!'''
+    with NordVPN) goes through your ISP's DNS (still unencrypted, even if you use a third-party
+    DNS servers) and completely compromises privacy!'''
     pass
 
 
