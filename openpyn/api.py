@@ -53,13 +53,8 @@ def get_countries():
     return countries_mapping
 
 
-def get_country_code(full_name):
+def get_country_code(country):
     json_response = get_nordvpn_json()
     for res in json_response:
-        if res["country"].lower() == full_name.lower():
-            code = res["domain"][:2].lower()
-            return code
-
-    print(Fore.RED + "Country Name Not Correct")
-    print(Style.RESET_ALL)
-    sys.exit()
+        if res["country"].lower() == country.lower():
+            return res['flag']
