@@ -1,6 +1,5 @@
 from openpyn import filters
 import requests
-import sys
 from ipaddress import IPv4Address
 from typing import List
 
