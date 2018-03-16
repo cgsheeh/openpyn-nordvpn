@@ -11,7 +11,7 @@ HEADERS = {
 
 
 # Using requests, GETs and returns json from a url.
-def server_info():
+def server_info() -> dict:
     url = ENDPOINT + 'server'
     response = requests.get(url, headers=HEADERS)
     response.raise_for_status()
@@ -19,7 +19,7 @@ def server_info():
     return response.json()
 
 
-def server_usage(domain=None):
+def server_usage(domain=None) -> dict:
     '''Returns server usage for all servers, or the specified server'''
     url = ENDPOINT + 'server/stats{}'.format('/' + domain if domain else '')
     resp = requests.get(url)
