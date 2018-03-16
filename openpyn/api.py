@@ -1,5 +1,4 @@
 from openpyn import filters
-from colorama import Fore, Back, Style
 import requests
 import sys
 
