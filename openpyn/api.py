@@ -12,21 +12,9 @@ HEADERS = {
 # Using requests, GETs and returns json from a url.
 def server_info():
     url = ENDPOINT + 'server'
-
-    try:
-        response = requests.get(url, headers=HEADERS)
-        response.raise_for_status()
-        json_response = response.json()
-
-    except requests.exceptions.HTTPError:
-        sys.exit("Cannot GET the json from nordvpn.com, Manually Specify a Server"
-                 "using '-s' for example '-s au10'")
-
-    except requests.exceptions.RequestException:
-        sys.exit("There was an ambiguous exception, Check Your Network Connection."
-                 "forgot to flush iptables? (openpyn -x)")
-
-    return json_response
+    response = requests.get(url, headers=HEADERS)
+    response.raise_for_status()
+    return response.json()
 
 
 def server_usage(domain=None):
