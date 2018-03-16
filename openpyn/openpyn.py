@@ -828,4 +828,8 @@ def kill(flush):
         raise NotImplementedError
 
 
+@nordvpn.command()
+def update():
+    '''Update config files from Nord'''
+    raise NotImplementedError
 
