@@ -811,8 +811,7 @@ def connect():
 
 @nordvpn.command()
 def status():
-    '''Return NordVPN connection status information, including the status of the
-    systemd unit.'''
+    '''Return running status information'''
     click.echo('status')
     raise NotImplementedError
 
