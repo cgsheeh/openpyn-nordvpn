@@ -789,7 +789,6 @@ def initialize():
 
     config = credentials.get_config()
 
-
     name = click.prompt('Enter your username', type=str, default=config.get('username'))
     passwd = click.prompt('Enter your password', type=str, default=config.get('password'))
 
@@ -802,7 +801,6 @@ def initialize():
         return
 
     click.secho('Config not written.')
-
 
 
 @nordvpn.command()
@@ -818,6 +816,7 @@ def status():
     systemd unit.'''
     click.echo('status')
     raise NotImplementedError
+
 
 @nordvpn.command()
 @click.option('--flush/--no-flush', help='Flush IP tables', default=False)
