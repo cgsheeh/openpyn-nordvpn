@@ -25,7 +25,7 @@ def write_config(config, path=DEFAULT_CONFIG):
         path.touch()
 
     with path.open('w') as config_file:
-        config_file.write(yaml.dump(config))
+        config_file.write(yaml.dump(config, default_flow_style=False))
 
 
 def edit_config(config, path=DEFAULT_CONFIG):
