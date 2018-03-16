@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from openpyn import api
 from openpyn import filters
 from openpyn import locations
