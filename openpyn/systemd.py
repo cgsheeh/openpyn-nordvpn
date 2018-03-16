@@ -40,8 +40,8 @@ def update_service(openpyn_options, run=False):
         'StandardError=syslog',
         '[Install]',
         'WantedBy=multi-user.target',
-    ]).format(openpyn=openpyn_location, openpynopts=openpyn_options, 
-              killopts=kill_option, sleep=sleep_location, 
+    ]).format(openpyn=openpyn_location, openpynopts=openpyn_options,
+              killopts=kill_option, sleep=sleep_location,
               basefilepath=__basefilepath__)
 
     with open("/etc/systemd/system/openpyn.service", "w+") as service_file:
