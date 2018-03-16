@@ -1,5 +1,3 @@
-from openpyn import __basefilepath__
-from openpyn import root
 import yaml
 from pathlib import Path
 
