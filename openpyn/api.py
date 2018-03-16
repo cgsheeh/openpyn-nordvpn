@@ -59,6 +59,19 @@ def dns_smart() -> List[IPv4Address]:
     ]
 
 
+def account_details(token):
+    url = ENDPOINT + '/user/databytoken'
+    headers = {
+        **HEADERS,
+        **{
+            'nToken': token,
+        },
+    }
+    resp = requests.get(url, headers=headers)
+    resp.raise_for_status()
+
+    # TODO verify online this works
+    return resp.json()
 
 
 # Gets json data, from api.nordvpn.com. filter servers by type, country, area.
