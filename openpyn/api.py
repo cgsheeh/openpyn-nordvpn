@@ -1,6 +1,7 @@
 from openpyn import filters
 import requests
 import sys
+from ipaddress import IPv4Address
 
 ENDPOINT = 'https://api.nordvpn.com/'
 HEADERS = {
@@ -25,6 +26,15 @@ def server_usage(domain=None):
     resp.raise_for_status()
 
     return resp.json()
+def ip_addr_nord() -> IPv4Address:
+    '''Get the IP address NordVPN believes you have'''
+    url = ENDPOINT + '/user/address'
+    resp = requests.get(url)
+    resp.raise_for_status()
+
+    return IPv4Address(resp.content.decode(encoding='utf-8'))
+
+
 # Gets json data, from api.nordvpn.com. filter servers by type, country, area.
 def get_data_from_api(country_code, area, p2p, dedicated, double_vpn, tor_over_vpn, anti_ddos, netflix):
     json_response = server_info()
