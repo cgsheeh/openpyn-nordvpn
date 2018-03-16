@@ -43,12 +43,12 @@ def get_data_from_api(country_code, area, p2p, dedicated, double_vpn, tor_over_v
 
 
 def get_countries():
-    countries_mapping = {}
     json_response = get_nordvpn_json()
 
-    for res in json_response:
-        if res['flag'] not in countries_mapping:
-            countries_mapping[res['flag']] = res['country']
+    countries_mapping = {
+        r['flag']: r['country']
+        for r in json_response
+    }
 
     return countries_mapping
 
