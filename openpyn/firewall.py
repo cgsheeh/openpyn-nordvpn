@@ -44,9 +44,6 @@ def apply_fw_rules(interfaces_details, vpn_server_ip, skip_dns_patch):
                 subprocess.call(
                     ["sudo", "iptables", "-A", "OUTPUT", "-o", interface[0], "-p",
                         "udp", "--destination-port", "53", "-j", "DROP"])
-                # subprocess.call(
-                #     ["sudo", "iptables", "-A", "OUTPUT", "-o", interface[0], "-p",
-                #         "tcp", "--destination-port", "53", "-j", "DROP"])
 
         if len(interface) == 3 and interface[0] != "lo" and "tun" not in interface[0]:
             # allow access to vpn_server_ip
@@ -60,7 +57,6 @@ def apply_fw_rules(interfaces_details, vpn_server_ip, skip_dns_patch):
                     "-s", vpn_server_ip, "-j", "ACCEPT"])
 
             # allow access to internal ip range
-            # print("internal ip with range", interface[2])
             subprocess.call(
                 ["sudo", "iptables", "-A", "OUTPUT", "-o", interface[0], "-d",
                     interface[2], "-j", "ACCEPT"])
