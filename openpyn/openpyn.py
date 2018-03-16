@@ -18,6 +18,8 @@ import os
 import sys
 import time
 import click
+from tempfile import mkstemp
+from zipfile import ZipFile
 
 
 def main():
@@ -785,6 +787,15 @@ def initialize():
     '''Initialize the application for use. Includes creating the credentials store,
     updating the VPN config files. Requires sudo access'''
     click.echo('Initializing')
+    click.echo('Retrieving VPN configuration files')
+
+    # Grab zipfile from Nord API, write to temp file,
+    # extract to config directory
+    archivedata = api.ovpn_files()
+    with mkstemp() as tmpfile:
+        tmpfile.write(archivedata)
+        zf = ZipFile(tmpfile)
+        zf.extractall(path=credentials.DEFAULT_CONFIG)
 
     config = credentials.get_config()
 
