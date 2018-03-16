@@ -805,7 +805,7 @@ def initialize():
 
 @nordvpn.command()
 def connect():
-    '''Connect '''
+    '''Connect to NordVPN'''
     click.echo('connect')
     raise NotImplementedError
 
