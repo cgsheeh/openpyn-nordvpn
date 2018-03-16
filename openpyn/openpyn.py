@@ -833,3 +833,8 @@ def update():
     '''Update config files from Nord'''
     raise NotImplementedError
 
+
+@nordvpn.command()
+def listservers():
+    '''List information about NordVPN servers'''
+    raise NotImplementedError
