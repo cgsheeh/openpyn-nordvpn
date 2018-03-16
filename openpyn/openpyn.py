@@ -786,7 +786,7 @@ def nordvpn():
 def initialize():
     '''Initialize the application for use. Includes creating the credentials store,
     updating the VPN config files. Requires sudo access'''
-    click.echo('Initializing')
+    click.secho('Initializing', bold=True)
     click.echo('Retrieving VPN configuration files')
 
     # Grab zipfile from Nord API, write to temp file,
