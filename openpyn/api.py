@@ -10,8 +10,8 @@ HEADERS = {
 }
 
 
-# Using requests, GETs and returns json from a url.
 def server_info() -> dict:
+    '''Return detailed server information.'''
     url = ENDPOINT + 'server'
     response = requests.get(url, headers=HEADERS)
     response.raise_for_status()
@@ -29,6 +29,8 @@ def server_usage(domain=None) -> dict:
 
 
 def ovpn_files() -> bytes:
+    '''Returns the bytes representing a zipv2 archive of the .ovpn
+    connection configuration files.'''
     url = ENDPOINT + '/files/zipv2'
     resp = requests.get(url)
     resp.raise_for_status()
@@ -46,6 +48,7 @@ def ip_addr_nord() -> IPv4Address:
 
 
 def dns_smart() -> List[IPv4Address]:
+    '''Returns DNS information from NordVPN'''
     url = ENDPOINT + '/dns/smart'
     resp = requests.get(url)
     resp.raise_for_status()
