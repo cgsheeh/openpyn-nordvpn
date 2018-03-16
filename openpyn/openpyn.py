@@ -770,7 +770,7 @@ def connect(server, port, silent, test, skip_dns_patch, openvpn_options, server_
 
 @click.group()
 def nordvpn():
-    '''A python3 script/systemd service (GPLv3+) to easily connect to and switch between, OpenVPN
+    '''nordvpn is a utility to easily connect to and switch between OpenVPN
     servers hosted by NordVPN. Quickly Connect to the least busy servers (using current
     data from Nordvpn website) with lowest latency from you. Find Nordvpn servers in a given
     country or city. Tunnels DNS traffic through the VPN which normally (when using OpenVPN
