@@ -843,9 +843,15 @@ def update():
     raise NotImplementedError
 
 
-@nordvpn.command()
-def listservers():
+@nordvpn.group()
+def info():
     '''List information about NordVPN servers'''
+    pass
+
+
+@info.command()
+def countries():
+    '''List available countries'''
     countries = api.get_countries()
     table = tabulate(sorted(list(countries.items())),
                      headers=['Code', 'Country'])
