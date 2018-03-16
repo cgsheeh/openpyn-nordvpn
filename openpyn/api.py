@@ -2,6 +2,7 @@ from openpyn import filters
 import requests
 import sys
 from ipaddress import IPv4Address
+from typing import List
 
 ENDPOINT = 'https://api.nordvpn.com/'
 HEADERS = {
@@ -33,6 +34,19 @@ def ip_addr_nord() -> IPv4Address:
     resp.raise_for_status()
 
     return IPv4Address(resp.content.decode(encoding='utf-8'))
+
+
+def dns_smart() -> List[IPv4Address]:
+    url = ENDPOINT + '/dns/smart'
+    resp = requests.get(url)
+    resp.raise_for_status()
+
+    return [
+        IPv4Address(item)
+        for item in resp.json()
+    ]
+
+
 
 
 # Gets json data, from api.nordvpn.com. filter servers by type, country, area.
