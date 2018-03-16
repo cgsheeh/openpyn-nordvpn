@@ -22,6 +22,7 @@ def get_config(path=DEFAULT_CONFIG) -> dict:
 
 
 def write_config(config, path=DEFAULT_CONFIG):
+    '''Writes the given config to the provided path.'''
     if not path.exists():
         path.touch()
 
