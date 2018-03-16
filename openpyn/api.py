@@ -14,6 +14,7 @@ def server_info():
     url = ENDPOINT + 'server'
     response = requests.get(url, headers=HEADERS)
     response.raise_for_status()
+
     return response.json()
 
 
@@ -22,6 +23,7 @@ def server_usage(domain=None):
     url = ENDPOINT + 'server/stats{}'.format('/' + domain if domain else '')
     resp = requests.get(url)
     resp.raise_for_status()
+
     return resp.json()
 # Gets json data, from api.nordvpn.com. filter servers by type, country, area.
 def get_data_from_api(country_code, area, p2p, dedicated, double_vpn, tor_over_vpn, anti_ddos, netflix):
