@@ -3,8 +3,6 @@ from colorama import Fore, Back, Style
 import requests
 import sys
 
-from tabulate import tabulate
-
 
 # Using requests, GETs and returns json from a url.
 def get_nordvpn_json():
@@ -44,16 +42,15 @@ def get_data_from_api(country_code, area, p2p, dedicated, double_vpn, tor_over_v
     return type_filtered_servers
 
 
-def list_all_countries():
+def get_countries():
     countries_mapping = {}
     json_response = get_nordvpn_json()
 
     for res in json_response:
-        if res["domain"][:2] not in countries_mapping:
-            countries_mapping.update({res["domain"][:2]: res["country"]})
+        if res['flag'] not in countries_mapping:
+            countries_mapping[res['flag']] = res['country']
 
-    print(tabulate(sorted(list(countries_mapping.items()))))
-    sys.exit()
+    return countries_mapping
 
 
 def get_country_code(full_name):

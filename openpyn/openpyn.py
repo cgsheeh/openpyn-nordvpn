@@ -11,6 +11,7 @@ from openpyn import __version__
 from openpyn import __basefilepath__
 
 from colorama import Fore, Back, Style
+from tabulate import tabulate
 import subprocess
 import argparse
 import os
@@ -245,7 +246,7 @@ def run(
                     double_vpn=double_vpn, tor_over_vpn=tor_over_vpn, anti_ddos=anti_ddos,
                     netflix=netflix)
             else:
-                api.list_all_countries()
+                api.get_countries()
         # if a country code is supplied give details about that country only.
         else:
             # if full name of the country supplied get country_code
@@ -835,4 +836,7 @@ def update():
 @nordvpn.command()
 def listservers():
     '''List information about NordVPN servers'''
-    raise NotImplementedError
+    countries = api.get_countries()
+    table = tabulate(sorted(list(countries.items())),
+                     headers=['Code', 'Country'])
+    click.echo(table)
