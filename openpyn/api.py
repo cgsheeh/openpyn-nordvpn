@@ -2,15 +2,19 @@ from openpyn import filters
 import requests
 import sys
 
+ENDPOINT = 'https://api.nordvpn.com/'
+HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) \
+    AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36'
+}
+
 
 # Using requests, GETs and returns json from a url.
-def get_nordvpn_json():
-    url = 'https://api.nordvpn.com/server'
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) \
-    AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36'}
+def server_info():
+    url = ENDPOINT + 'server'
 
     try:
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=HEADERS)
         response.raise_for_status()
         json_response = response.json()
 
@@ -27,7 +31,7 @@ def get_nordvpn_json():
 
 # Gets json data, from api.nordvpn.com. filter servers by type, country, area.
 def get_data_from_api(country_code, area, p2p, dedicated, double_vpn, tor_over_vpn, anti_ddos, netflix):
-    json_response = get_nordvpn_json()
+    json_response = server_info()
 
     type_filtered_servers = filters.filter_by_type(
         json_response, p2p, dedicated, double_vpn, tor_over_vpn, anti_ddos, netflix)
@@ -42,7 +46,7 @@ def get_data_from_api(country_code, area, p2p, dedicated, double_vpn, tor_over_v
 
 
 def get_countries():
-    json_response = get_nordvpn_json()
+    json_response = server_info()
 
     countries_mapping = {
         r['flag']: r['country']
@@ -53,7 +57,7 @@ def get_countries():
 
 
 def get_country_code(country):
-    json_response = get_nordvpn_json()
+    json_response = server_info()
     for res in json_response:
         if res["country"].lower() == country.lower():
             return res['flag']
