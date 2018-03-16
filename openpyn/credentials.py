@@ -16,7 +16,10 @@ def get_config(path=DEFAULT_CONFIG) -> dict:
     except FileNotFoundError:
         return {}
 
-    return config
+    # If the config file is empty but exists, this will return
+    # none and cause an AttributeError. So ensure a dict is
+    # returned
+    return config or {}
 
 
 def write_config(config, path=DEFAULT_CONFIG):
