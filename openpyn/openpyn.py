@@ -819,3 +819,14 @@ def status():
     click.echo('status')
     raise NotImplementedError
 
+@nordvpn.command()
+@click.option('--flush/--no-flush', help='Flush IP tables', default=False)
+def kill(flush):
+    '''Kill running NordVPN connections'''
+    if flush:
+        click.echo('hello')
+    else:
+        raise NotImplementedError
+
+
+
