@@ -30,10 +30,3 @@ def write_config(config, path=DEFAULT_CONFIG_FILE):
 
     with path.open('w') as config_file:
         config_file.write(yaml.dump(config, default_flow_style=False))
-
-
-def edit_config(config, path=DEFAULT_CONFIG_FILE):
-    '''Open the config file in an editor
-
-    NOTE: mercurial can do this, look at their code'''
-    raise NotImplementedError

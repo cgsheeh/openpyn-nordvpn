@@ -790,7 +790,7 @@ def version():
 
 
 @nordvpn.command()
-def initialize():
+def config():
     '''Initialize the application for use. Includes creating the credentials store,
     updating the VPN config files. Requires sudo access'''
     with click_spinner.spinner():
