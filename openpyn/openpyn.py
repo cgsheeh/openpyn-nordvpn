@@ -832,7 +832,7 @@ def wizard():
 
         return
 
-    click.secho('Config not written.')
+    click.secho('Config not written.', bold=True)
 
 
 @nordvpn.command()
