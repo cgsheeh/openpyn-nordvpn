@@ -789,10 +789,21 @@ def version():
     click.echo('NordVPN command line interface, version {}'.format(__version__))
 
 
-@nordvpn.command()
+@nordvpn.group()
 def config():
-    '''Initialize the application for use. Includes creating the credentials store,
-    updating the VPN config files. Requires sudo access'''
+    '''View and modify configuration options'''
+    pass
+
+
+@config.command()
+def edit():
+    '''Edit config in a text editor'''
+    click.edit(filename=credentials.DEFAULT_CONFIG_FILE)
+
+
+@config.command()
+def wizard():
+    '''NordVPN configuration setup wizard'''
     with click_spinner.spinner():
         click.secho('Initializing', bold=True)
         click.echo('Retrieving VPN configuration files')
