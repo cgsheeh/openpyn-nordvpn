@@ -881,14 +881,23 @@ def countries():
 
 @info.command()
 @click.option('--country', type=str, help='Filter by country')
-def servers(country):
+@click.option('--max-usage', type=int, help='Remove servers with usage below this amount')
+def servers(country, max_usage):
     '''Return a list of servers from the provided criteria'''
     servers = api.server_info()
+
     if country:
         servers = [
             server
             for server in servers
             if server['flag'].lower() == country
+        ]
+
+    if max_usage:
+        servers = [
+            server
+            for server in servers
+            if server['load'] < max_usage
         ]
 
     table_entries = [
