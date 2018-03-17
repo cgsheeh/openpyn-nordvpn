@@ -33,6 +33,7 @@ setuptools.setup(
         'click==6.7',
         'PyYaml==3.12'
         'click-spinner==0.1.7',
+        'voluptuous==0.11.1',
     ],
     platforms=['GNU/Linux', 'Ubuntu', 'Debian', 'Kali', 'CentOS', 'Arch', 'Fedora'],
     packages=setuptools.find_packages(),
