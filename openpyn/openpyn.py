@@ -802,6 +802,7 @@ def initialize():
         tmpfile.write(archivedata)
         zf = ZipFile(tmpfile)
         zf.extractall(path=credentials.DEFAULT_CONFIG)
+        click.echo('OpenVPN config files saved to disk.')
 
     config = credentials.get_config()
 
