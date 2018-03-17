@@ -783,6 +783,12 @@ def nordvpn():
 
 
 @nordvpn.command()
+def version():
+    '''Display the NordVPN version'''
+    click.echo('NordVPN command line interface, version {}'.format(__version__))
+
+
+@nordvpn.command()
 def initialize():
     '''Initialize the application for use. Includes creating the credentials store,
     updating the VPN config files. Requires sudo access'''
