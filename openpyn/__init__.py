@@ -3,7 +3,7 @@ import subprocess
 
 __version__ = "0.0.0"
 __license__ = "GNU General Public License v3 or later (GPLv3+)"
-__basefilepath__ = "/usr/share/openpyn/"
+__basefilepath__ = "/usr/share/openpyn"
 __data_files__ = []     # will be overwritten for non Mac OS
 
 if sys.platform == "linux":

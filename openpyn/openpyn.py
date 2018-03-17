@@ -10,7 +10,7 @@ from openpyn import systemd
 from openpyn import __version__
 from openpyn import __basefilepath__
 
-from colorama import Fore, Back, Style
+from colorama import Fore, Style
 from tabulate import tabulate
 import subprocess
 import argparse
@@ -18,7 +18,8 @@ import os
 import sys
 import time
 import click
-from tempfile import mkstemp
+import click_spinner
+from tempfile import TemporaryFile
 from zipfile import ZipFile
 
 
@@ -792,30 +793,32 @@ def version():
 def initialize():
     '''Initialize the application for use. Includes creating the credentials store,
     updating the VPN config files. Requires sudo access'''
-    click.secho('Initializing', bold=True)
-    click.echo('Retrieving VPN configuration files')
+    with click_spinner.spinner():
+        click.secho('Initializing', bold=True)
+        click.echo('Retrieving VPN configuration files')
 
-    # Grab zipfile from Nord API, write to temp file,
-    # extract to config directory
-    archivedata = api.ovpn_files()
-    with mkstemp() as tmpfile:
-        tmpfile.write(archivedata)
-        zf = ZipFile(tmpfile)
-        zf.extractall(path=credentials.DEFAULT_CONFIG)
-        click.echo('OpenVPN config files saved to disk.')
 
-    config = credentials.get_config()
+        # Grab zipfile from Nord API, write to temp file,
+        # extract to config directory
+        archivedata = api.ovpn_files()
+        with TemporaryFile() as tmpfile:
+            tmpfile.write(archivedata)
+            zf = ZipFile(tmpfile)
+            zf.extractall(path=credentials.DEFAULT_CONFIG_DIR)
+            click.echo('OpenVPN config files saved to disk.')
 
-    name = click.prompt('Enter your username', type=str, default=config.get('username'))
-    passwd = click.prompt('Enter your password', type=str, default=config.get('password'))
+        config = credentials.get_config()
 
-    if click.confirm('Write config?'):
-        credentials.write_config({
-            'username': name,
-            'password': passwd,
-        })
+        name = click.prompt('Enter your username', type=str, default=config.get('username'))
+        passwd = click.prompt('Enter your password', type=str, default=config.get('password'))
 
-        return
+        if click.confirm('Write config?'):
+            credentials.write_config({
+                'username': name,
+                'password': passwd,
+            })
+
+            return
 
     click.secho('Config not written.')
 
