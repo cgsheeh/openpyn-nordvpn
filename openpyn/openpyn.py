@@ -862,7 +862,7 @@ def info():
 @info.command()
 def countries():
     '''List available countries'''
-    countries = api.get_countries()
-    table = tabulate(sorted(list(countries.items())),
+    countries_list = api.get_countries()
+    table = tabulate(sorted(list(countries_list.items())),
                      headers=['Code', 'Country'])
     click.echo(table)
