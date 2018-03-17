@@ -4,7 +4,7 @@ from pathlib import Path
 # This module should store and retrieve the app config
 # We should store in the config a key, which can be used
 # to unlock the uname/password
-DEFAULT_CONFIG_DIR = Path('/home/connor/.config/nordvpn.yml')
+DEFAULT_CONFIG_DIR = Path('/home/connor/.config/nordvpn')
 DEFAULT_CONFIG_FILE = DEFAULT_CONFIG_DIR / 'nordvpn.yml'
 
 
