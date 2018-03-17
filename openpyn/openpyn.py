@@ -797,7 +797,6 @@ def initialize():
         click.secho('Initializing', bold=True)
         click.echo('Retrieving VPN configuration files')
 
-
         # Grab zipfile from Nord API, write to temp file,
         # extract to config directory
         archivedata = api.ovpn_files()
