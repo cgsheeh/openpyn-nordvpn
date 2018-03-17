@@ -804,20 +804,21 @@ def initialize():
             tmpfile.write(archivedata)
             zf = ZipFile(tmpfile)
             zf.extractall(path=credentials.DEFAULT_CONFIG_DIR)
-            click.echo('OpenVPN config files saved to disk.')
 
-        config = credentials.get_config()
+    click.echo('OpenVPN config files saved to disk.')
 
-        name = click.prompt('Enter your username', type=str, default=config.get('username'))
-        passwd = click.prompt('Enter your password', type=str, default=config.get('password'))
+    config = credentials.get_config()
 
-        if click.confirm('Write config?'):
-            credentials.write_config({
-                'username': name,
-                'password': passwd,
-            })
+    name = click.prompt('Enter your username', type=str, default=config.get('username'))
+    passwd = click.prompt('Enter your password', type=str, default=config.get('password'))
 
-            return
+    if click.confirm('Write config?'):
+        credentials.write_config({
+            'username': name,
+            'password': passwd,
+        })
+
+        return
 
     click.secho('Config not written.')
 
