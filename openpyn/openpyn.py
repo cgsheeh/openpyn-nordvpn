@@ -19,6 +19,7 @@ import sys
 import time
 import click
 import click_spinner
+from operator import itemgetter
 from tempfile import TemporaryFile
 from zipfile import ZipFile
 
@@ -876,4 +877,25 @@ def countries():
     countries_list = api.get_countries()
     table = tabulate(sorted(list(countries_list.items())),
                      headers=['Code', 'Country'])
+    click.echo(table)
+
+@info.command()
+@click.option('--country', type=str, help='Filter by country')
+def servers(country):
+    '''Return a list of servers from the provided criteria'''
+    servers = api.server_info()
+    if country:
+        servers = [
+            server
+            for server in servers
+            if server['flag'].lower() == country
+        ]
+
+    table_entries = [
+        (server['name'], server['load'])
+        for server in servers
+    ]
+
+    table = tabulate(sorted(table_entries, key=itemgetter(1)),
+                     headers=['Name', 'Load'])
     click.echo(table)
