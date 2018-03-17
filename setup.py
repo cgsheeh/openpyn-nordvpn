@@ -32,6 +32,7 @@ setuptools.setup(
         'tabulate==0.8.2',
         'click==6.7',
         'PyYaml==3.12'
+        'click-spinner==0.1.7',
     ],
     platforms=['GNU/Linux', 'Ubuntu', 'Debian', 'Kali', 'CentOS', 'Arch', 'Fedora'],
     packages=setuptools.find_packages(),
