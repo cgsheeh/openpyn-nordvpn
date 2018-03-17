@@ -1,14 +1,24 @@
 from openpyn import filters
 import requests
-from ipaddress import IPv4Address
+from ipaddress import IPv4Address, AddressValueError
 from typing import List
-from voluptuous import Schema
+from voluptuous import FqdnUrl, Schema, truth
 
 ENDPOINT = 'https://api.nordvpn.com/'
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) \
     AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36'
 }
+
+
+@truth
+def is_ip_address(v: str) -> bool:
+    try:
+        _ = IPv4Address(v)
+        return True
+
+    except AddressValueError:
+        return False
 
 
 def server_info() -> dict:
@@ -20,11 +30,11 @@ def server_info() -> dict:
     schema = Schema([
         {
             'id': int,
-            'ip_address': str,
+            'ip_address': is_ip_address,
             'search_keywords': list,
             'categories': list,
             'name': str,
-            'domain': str,
+            'domain': FqdnUrl,
             'price': int,
             'flag': str,
             'country': str,
