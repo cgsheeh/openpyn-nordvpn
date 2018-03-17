@@ -2,6 +2,7 @@ from openpyn import filters
 import requests
 from ipaddress import IPv4Address
 from typing import List
+from voluptuous import Schema
 
 ENDPOINT = 'https://api.nordvpn.com/'
 HEADERS = {
@@ -15,8 +16,41 @@ def server_info() -> dict:
     url = ENDPOINT + 'server'
     response = requests.get(url, headers=HEADERS)
     response.raise_for_status()
+    json = response.json()
+    schema = Schema([
+        {
+            'id': int,
+            'ip_address': str,
+            'search_keywords': list,
+            'categories': list,
+            'name': str,
+            'domain': str,
+            'price': int,
+            'flag': str,
+            'country': str,
+            'load': int,
+            'location': {
+                'lat': float,
+                'long': float,
+            },
+            'features': {
+                'ikev2': bool,
+                'openvpn_udp': bool,
+                'openvpn_tcp': bool,
+                'socks': bool,
+                'proxy': bool,
+                'pptp': bool,
+                'l2tp': bool,
+                'openvpn_xor_udp': bool,
+                'openvpn_xor_tcp': bool,
+                'proxy_cybersec': bool,
+                'proxy_ssl': bool,
+                'proxy_ssl_cybersec': bool,
+            },
+        }
+    ], required=True, extra=False)
 
-    return response.json()
+    return schema(json)
 
 
 def server_usage(domain=None) -> dict:
