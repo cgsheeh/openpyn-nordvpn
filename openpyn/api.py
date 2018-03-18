@@ -68,8 +68,13 @@ def server_usage(domain=None) -> dict:
     url = ENDPOINT + 'server/stats{}'.format('/' + domain if domain else '')
     resp = requests.get(url)
     resp.raise_for_status()
+    schema = Schema({
+        str: {
+            'percent': int,
+        }
+    })
 
-    return resp.json()
+    return schema(resp.json())
 
 
 def ovpn_files() -> bytes:
