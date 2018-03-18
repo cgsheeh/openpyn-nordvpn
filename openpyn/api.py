@@ -1,7 +1,7 @@
 from openpyn import filters
 import requests
 from ipaddress import ip_address, IPv4Address, IPv6Address
-from typing import List, Any
+from typing import List, Union
 from voluptuous import FqdnUrl, Schema, truth
 
 ENDPOINT = 'https://api.nordvpn.com/'
@@ -87,7 +87,7 @@ def ovpn_files() -> bytes:
     return resp.content
 
 
-def ip_addr_nord() -> Any[IPv4Address, IPv6Address]:
+def ip_addr_nord() -> Union[IPv4Address, IPv6Address]:
     '''Get the IP address NordVPN believes you have'''
     url = ENDPOINT + '/user/address'
     resp = requests.get(url)
@@ -96,7 +96,7 @@ def ip_addr_nord() -> Any[IPv4Address, IPv6Address]:
     return ip_address(resp.content.decode(encoding='utf-8'))
 
 
-def dns_smart() -> List[Any[IPv4Address, IPv6Address]]:
+def dns_smart() -> List[Union[IPv4Address, IPv6Address]]:
     '''Returns DNS information from NordVPN'''
     url = ENDPOINT + '/dns/smart'
     resp = requests.get(url)
