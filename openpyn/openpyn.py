@@ -639,7 +639,6 @@ def connect(server, port, silent, test, skip_dns_patch, openvpn_options, server_
 
         vpn_config_file = __basefilepath__ + "files/" + folder + server +\
             ".nordvpn.com." + port + ".ovpn"
-        # print("CONFIG FILE", vpn_config_file)
         if os.path.isfile(vpn_config_file) is False:
             print(Fore.RED + "VPN configuration file", vpn_config_file,
                   "doesn't exist, don't worry running 'openpyn --update' for you :)" + Fore.BLUE)
@@ -647,7 +646,6 @@ def connect(server, port, silent, test, skip_dns_patch, openvpn_options, server_
             update_config_files()
     elif server_provider == "ipvanish":
         vpn_config_file = __basefilepath__ + "files/" + "ipvanish/" + server
-        # print("ipvanish")
 
     if test:
         print("Simulation end reached, openpyn would have connected to Server:" +
@@ -839,9 +837,38 @@ def wizard():
 @click.option('--domain', '-d', type=str, help='Domain name of server')
 @click.option('--proto', '-p', type=click.Choice(['tcp', 'udp']), help='Connection protocol', default='udp')
 def connect(domain, proto):
-    '''Connect to NordVPN'''
-    click.echo('connect')
-    raise NotImplementedError
+    '''Connect to NordVPN
+
+    openpyn procedure (note that server is already picked at this point)
+        1. determine if tcp or udp, use that to figure out what folder the .ovpn file is in
+        2. If this is a test run, just exit
+        3. kill any other openpyn processes
+        4. Require sudo at this point, get it if needed
+        5. If running with notifications on, activate them
+        6. If on linux, do stuff with resolvconf
+            - "tunnel dns through vpn by changing /etc/resolv.conf using
+            update-resolve-conf.sh to change the dns servers to nordvpn's
+        7. run openvpn via subprocess. this is where the silent, dns etc options
+        are applied
+        8. exit.
+
+    my procedure:
+        1. if the domain is specified, use that + proto to find the ovpn file
+        2.
+    '''
+    if not domain:
+        raise NotImplementedError('Dynamic domain selection not yet implemented')
+
+    if proto == 'udp':
+        proto += '1194'
+    else:
+        proto += '443'
+
+    filename = f'{domain}.{proto}.ovpn'
+    ovpn_file = credentials.DEFAULT_OVPN_CONFIG_DIR / filename
+
+    subprocess.run(["sudo", "openvpn", "--redirect-gateway", "--auth-retry",
+                     "nointeract", "--config", ovpn_file, "--script-security", "2"])
 
 
 @nordvpn.command()
