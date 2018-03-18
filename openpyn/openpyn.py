@@ -836,8 +836,8 @@ def wizard():
 
 
 @nordvpn.command()
-@click.option('--domain', type=str, help='Domain name of server')
-@click.option('--proto', type=click.Choice(['tcp', 'udp']), help='Connection protocol', default='udp')
+@click.option('--domain', '-d', type=str, help='Domain name of server')
+@click.option('--proto', '-p', type=click.Choice(['tcp', 'udp']), help='Connection protocol', default='udp')
 def connect(domain, proto):
     '''Connect to NordVPN'''
     click.echo('connect')
