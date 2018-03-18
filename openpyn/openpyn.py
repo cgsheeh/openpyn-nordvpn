@@ -885,20 +885,19 @@ def countries():
 def servers(country, max_usage):
     '''Return a list of servers from the provided criteria'''
     servers = api.server_info()
+    filters = []
 
     if country:
-        servers = [
-            server
-            for server in servers
-            if server['flag'].lower() == country
-        ]
+        filters.append(lambda s: s['flag'].lower() == country)
 
     if max_usage:
-        servers = [
-            server
-            for server in servers
-            if server['load'] < max_usage
-        ]
+        filters.append(lambda s: s['load'] < max_usage)
+
+    servers = [
+        server
+        for server in servers
+        if all(f(server) for f in filters)
+    ]
 
     table_entries = [
         (server['name'], server['load'])
