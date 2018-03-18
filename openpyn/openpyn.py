@@ -913,24 +913,24 @@ def countries():
 @click.option('--max-usage', type=int, help='Remove servers with usage below this amount')
 def servers(country, max_usage):
     '''Return a list of servers from the provided criteria'''
-    servers = api.server_info()
-    filters = []
+    nord_servers = api.server_info()
+    server_filters = []
 
     if country:
-        filters.append(lambda s: s['flag'].lower() == country)
+        server_filters.append(filters.country_filter(country))
 
     if max_usage:
-        filters.append(lambda s: s['load'] < max_usage)
+        server_filters.append(filters.load_filter(max_usage))
 
-    servers = [
+    nord_servers = [
         server
-        for server in servers
-        if all(f(server) for f in filters)
+        for server in nord_servers
+        if all(f(server) for f in server_filters)
     ]
 
     table_entries = [
         (server['name'], server['load'])
-        for server in servers
+        for server in nord_servers
     ]
 
     table = tabulate(sorted(table_entries, key=itemgetter(1)),

@@ -99,3 +99,13 @@ def filter_by_load(server_list, max_load, top_servers):
         print("There are no servers that satisfy your criteria, please broaden your search.")
         sys.exit()
     return remaining_servers
+
+
+def country_filter(country):
+    '''Returns a function to filter servers by country'''
+    return lambda s: s['flag'].lower() == country
+
+
+def load_filter(max_load):
+    '''Returns a function to filter servers with too high load'''
+    return lambda s: s['load'] < max_load
