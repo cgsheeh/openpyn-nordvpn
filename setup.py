@@ -1,5 +1,4 @@
 from openpyn import __version__
-from openpyn import __basefilepath__
 from openpyn import __data_files__
 
 import sys
@@ -15,13 +14,13 @@ with open('README.md', encoding='utf-8') as readme_file:
     readme_file.close()
 
 setuptools.setup(
-    name='openpyn',
+    name='NordVPN CLI',
     version=__version__,
     description='Easily connect to and switch between, OpenVPN servers hosted by NordVPN.',
     license='GNU General Public License v3 or later (GPLv3+)',
-    author='JGill',
+    author='Connor Sheehan',
     zip_safe=False,
-    author_email='joty@mygnu.org',
+    author_email='sheehan@mozilla.com',
     url='https://github.com/jotyGill/openpyn-nordvpn/',
     keywords=[
         'openvpn wrapper', 'nordvpn', 'nordvpn client', 'secure vpn',
