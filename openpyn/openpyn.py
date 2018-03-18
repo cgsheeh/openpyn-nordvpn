@@ -815,7 +815,7 @@ def wizard():
         with TemporaryFile() as tmpfile:
             tmpfile.write(archivedata)
             zf = ZipFile(tmpfile)
-            zf.extractall(path=credentials.DEFAULT_CONFIG_DIR)
+            zf.extractall(path=credentials.DEFAULT_OVPN_CONFIG_DIR)
 
     click.echo('OpenVPN config files saved to disk.')
 

@@ -6,6 +6,7 @@ from pathlib import Path
 # to unlock the uname/password
 DEFAULT_CONFIG_DIR = Path('/home/connor/.config/nordvpn')
 DEFAULT_CONFIG_FILE = DEFAULT_CONFIG_DIR / 'nordvpn.yml'
+DEFAULT_OVPN_CONFIG_DIR = DEFAULT_CONFIG_DIR / 'ovpn'
 
 
 def get_config(path=DEFAULT_CONFIG_FILE) -> dict:
