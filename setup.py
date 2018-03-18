@@ -27,12 +27,12 @@ setuptools.setup(
         'openvpn wrapper', 'nordvpn', 'nordvpn client', 'secure vpn',
         'vpn wrapper', 'private vpn', 'privacy'],
     install_requires=[
-        'requests==2.18.4',
         'colorama==0.3.9',
-        'tabulate==0.8.2',
         'click==6.7',
-        'PyYaml==3.12'
         'click-spinner==0.1.7',
+        'PyYaml==3.12',
+        'requests==2.18.4',
+        'tabulate==0.8.2',
         'voluptuous==0.11.1',
     ],
     platforms=['GNU/Linux', 'Ubuntu', 'Debian', 'Kali', 'CentOS', 'Arch', 'Fedora'],
