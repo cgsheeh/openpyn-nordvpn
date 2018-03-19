@@ -909,6 +909,7 @@ def countries():
                      headers=['Code', 'Country'])
     click.echo(table)
 
+
 @info.command()
 @click.option('--country', type=str, help='Filter by country')
 @click.option('--max-usage', type=int, help='Remove servers with usage below this amount')
