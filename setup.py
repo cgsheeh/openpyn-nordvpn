@@ -29,6 +29,7 @@ setuptools.setup(
         'colorama==0.3.9',
         'click==6.7',
         'click-spinner==0.1.7',
+        'psutil==5.4.3',
         'PyYaml==3.12',
         'requests==2.18.4',
         'tabulate==0.8.2',
