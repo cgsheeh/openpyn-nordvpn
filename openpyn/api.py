@@ -2,7 +2,7 @@ from openpyn import filters
 import requests
 from ipaddress import ip_address, IPv4Address, IPv6Address
 from typing import List, Union
-from voluptuous import FqdnUrl, Schema, truth
+from voluptuous import Schema, truth
 
 ENDPOINT = 'https://api.nordvpn.com/'
 HEADERS = {
@@ -34,7 +34,7 @@ def server_info() -> dict:
             'search_keywords': list,
             'categories': list,
             'name': str,
-            'domain': FqdnUrl,
+            'domain': str,
             'price': int,
             'flag': str,
             'country': str,
