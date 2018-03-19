@@ -109,3 +109,9 @@ def country_filter(country):
 def load_filter(max_load):
     '''Returns a function to filter servers with too high load'''
     return lambda s: s['load'] < max_load
+
+
+def table_entry_filter(desired_args):
+    '''Returns a function to create a table entry filter from
+    a NordVPN server object'''
+    return lambda s: tuple(s[arg] for arg in desired_args)

@@ -935,4 +935,8 @@ def servers(country, max_usage, limit):
     ], key=itemgetter(1))[:limit]
 
     table = tabulate(table_entries, headers=['Name', 'Load'])
+    if len(table_entries) == 0:
+        click.secho('No servers found', bold=True)
+        return 1
+
     click.echo(table)
