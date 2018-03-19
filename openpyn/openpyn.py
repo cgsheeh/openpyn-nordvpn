@@ -19,6 +19,7 @@ import sys
 import time
 import click
 import click_spinner
+import psutil
 from operator import itemgetter
 from tempfile import TemporaryFile
 from zipfile import ZipFile
@@ -886,8 +887,13 @@ def kill(flush):
     if flush:
         click.echo('hello')
     else:
-        raise NotImplementedError
+        click.echo('Killing all OpenVPN processes')
+        for proc in psutil.process_iter():
+            if proc.name() == 'openvpn':
+                proc.kill()
+                click.echo('Killed process {}'.format(proc.pid))
 
+        click.secho('All OpenVPN processes killed', bold=True)
 
 @nordvpn.command()
 def update():
