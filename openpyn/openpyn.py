@@ -803,19 +803,19 @@ def edit():
 @config.command()
 def wizard():
     '''NordVPN configuration setup wizard'''
-    with click_spinner.spinner():
-        click.secho('Initializing', bold=True)
-        click.echo('Retrieving VPN configuration files')
+    if click.confirm('Update OpenVPN config files?'):
+        with click_spinner.spinner():
+            click.echo('Retrieving VPN configuration files')
 
-        # Grab zipfile from Nord API, write to temp file,
-        # extract to config directory
-        archivedata = api.ovpn_files()
-        with TemporaryFile() as tmpfile:
-            tmpfile.write(archivedata)
-            zf = ZipFile(tmpfile)
-            zf.extractall(path=credentials.DEFAULT_OVPN_CONFIG_DIR)
+            # Grab zipfile from Nord API, write to temp file,
+            # extract to config directory
+            archivedata = api.ovpn_files()
+            with TemporaryFile() as tmpfile:
+                tmpfile.write(archivedata)
+                zf = ZipFile(tmpfile)
+                zf.extractall(path=credentials.DEFAULT_OVPN_CONFIG_DIR)
 
-    click.echo('OpenVPN config files saved to disk.')
+        click.echo('OpenVPN config files saved to disk.')
 
     config = credentials.get_config()
 
