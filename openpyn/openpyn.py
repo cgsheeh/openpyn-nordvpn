@@ -930,13 +930,13 @@ def servers(country, max_usage, limit):
     ]
 
     table_entries = sorted([
-        (server['name'], server['load'])
+        (server['name'], server['load'], server['domain'])
         for server in nord_servers
     ], key=itemgetter(1))[:limit]
 
-    table = tabulate(table_entries, headers=['Name', 'Load'])
     if len(table_entries) == 0:
         click.secho('No servers found', bold=True)
         return 1
 
+    table = tabulate(table_entries, headers=['Name', 'Load', 'Domain'])
     click.echo(table)
