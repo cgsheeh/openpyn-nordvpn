@@ -21,9 +21,6 @@ A python3 script/systemd service, to easily connect to and switch between, OpenV
 * NVRAM write support for Asuswrt-merlin
 * Pass through openvpn options, e.g. openpyn uk -o '--status /var/log/status.log --log /var/log/log.log'
 
-## Demo
-![connection](https://user-images.githubusercontent.com/8462091/29347697-0798a52a-823e-11e7-818f-4dad1582e173.gif)
-
 ## Instructions
 1. Install dependencies if they are not already present.
 ``` bash
