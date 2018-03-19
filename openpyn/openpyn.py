@@ -820,7 +820,8 @@ def wizard():
     config = credentials.get_config()
 
     name = click.prompt('Enter your username', type=str, default=config.get('username'))
-    passwd = click.prompt('Enter your password', type=str, default=config.get('password'))
+    passwd = click.prompt('Enter your password', type=str, default=config.get('password'),
+                          hide_input=True)
 
     if click.confirm('Write config?'):
         credentials.write_config({
