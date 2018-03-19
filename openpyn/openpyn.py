@@ -911,7 +911,8 @@ def countries():
 @info.command()
 @click.option('--country', type=str, help='Filter by country')
 @click.option('--max-usage', type=int, help='Remove servers with usage below this amount')
-def servers(country, max_usage):
+@click.option('--limit', type=int, help='Number of servers to limit by', default=40)
+def servers(country, max_usage, limit):
     '''Return a list of servers from the provided criteria'''
     nord_servers = api.server_info()
     server_filters = []
@@ -928,11 +929,10 @@ def servers(country, max_usage):
         if all(f(server) for f in server_filters)
     ]
 
-    table_entries = [
+    table_entries = sorted([
         (server['name'], server['load'])
         for server in nord_servers
-    ]
+    ], key=itemgetter(1))[:limit]
 
-    table = tabulate(sorted(table_entries, key=itemgetter(1)),
-                     headers=['Name', 'Load'])
+    table = tabulate(table_entries, headers=['Name', 'Load'])
     click.echo(table)
